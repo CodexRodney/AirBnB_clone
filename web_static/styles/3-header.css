@@ -1,9 +1,10 @@
 header{
-	background: white;
+	background: white url(../images/logo.png);
+	background-repeat: no-repeat;
 	height: 70px;
 	width: 100%;
-	border-bottom : 1px #CCCCCC
-	padding : 70px 0;
+	border-bottom : 1px #CCCCCC solid;
 	align : left;
 	padding-left : 20px;
+	background-position: 20px center;
 }
