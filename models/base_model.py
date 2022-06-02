@@ -4,20 +4,33 @@ Defines a class BaseModel
 """
 
 
-import datetime
+from datetime import datetime
 import uuid
+
 
 class BaseModel:
     """
     Defines all common attributes/methods for other classes
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Instantiates values to attributes
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        if kwargs:
+            for key, item in kwargs.items():
+                if key == "__class__":
+                    continue
+                if key == "created_at":
+                    self.__dict__[key] = datetime.fromisoformat(item)
+                    continue
+                if key == "updated_at":
+                    self.__dict__[key] = datetime.fromisoformat(item)
+                    continue
+                self.__dict__[key] = item
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """
@@ -28,9 +41,9 @@ class BaseModel:
 
     def save(self):
         """
-        Updates the public instance attribute updated_at with the current datetime
+        Updates attribute updated_at with the current datetime
         """
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """
