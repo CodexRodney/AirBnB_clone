@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
-    def emptyline():
+    def emptyline(self):
         pass
 
 
