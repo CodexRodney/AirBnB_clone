@@ -9,8 +9,6 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
-    def do_greet(self, line):
-        print("Hello there")
 
     def do_EOF(self, line):
         """
@@ -23,6 +21,9 @@ class HBNBCommand(cmd.Cmd):
         Quit command to exit the program
         """
         return True
+
+    def emptyline():
+        pass
 
 
 if __name__ == "__main__":
