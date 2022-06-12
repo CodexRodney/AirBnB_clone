@@ -18,21 +18,25 @@ class FileStorage:
         """
         returns the dictionary __objects
         """
-        return __objects
+        return type(self).__objects
 
     def new(self, obj):
         """
         sets in __objects the obj with key <obj class name>.id
         """
-        key_name = str(type(obj).__name__) + str(obj.id)  # key name for the obj
-        __objects[key_name] = obj
+        key_name = str(type(obj).__name__) + '.' +  str(obj.id)
+        type(self).__objects[key_name] = obj
 
     def save(self):
         """
         Serializes objects to the JSON file in the path __file_path
         """
-        with open(__file_path, 'w') as myFile:
-            json.dump(__objects, myFile)
+        obj_dict = {}
+        for key, obj in type(self).__objects.items():
+            obj_dict[key] = obj.to_dict()
+
+        with open(type(self).__file_path, 'w') as myFile:
+            json.dump(obj_dict, myFile)
 
     def reload(self):
         """
@@ -42,7 +46,10 @@ class FileStorage:
         no exception should be raised
         """
         try:
-            with open(__file_path) as myFile:
-                __objects = json.load(myFile)
+            with open(type(self).__file_path) as myFile:
+                json_dict = json.load(myFile)
+                for obj_dict in json_dict.values():
+                    cls = obj_dict['__class__']
+                    self.new(eval('{}({})'.format(cls, '**obj_dict')))
         except:
-            return
+            pass
