@@ -9,6 +9,9 @@ import uuid
 from models import storage
 
 
+time = "%Y-%m-%dT%H:%M:%S.%f"
+
+
 class BaseModel:
     """
     Defines all common attributes/methods for other classes
@@ -22,10 +25,10 @@ class BaseModel:
                 if key == "__class__":
                     continue
                 if key == "created_at":
-                    self.__dict__[key] = datetime.fromisoformat(item)
+                    self.__dict__[key] = datetime.strptime(item, time)
                     continue
                 if key == "updated_at":
-                    self.__dict__[key] = datetime.fromisoformat(item)
+                    self.__dict__[key] = datetime.fromisoformat(item, time)
                     continue
                 self.__dict__[key] = item
         else:
@@ -53,7 +56,8 @@ class BaseModel:
         Returns a dictionary containing all keys/values of
         __dict__ of the instance
         """
-        self.__dict__["__class__"] = type(self).__name__
-        self.__dict__["created_at"] = self.created_at.isoformat()
-        self.__dict__["updated_at"] = self.updated_at.isoformat()
-        return self.__dict__
+        new_dict = self.__dict__.copy()
+        new_dict["__class__"] = type(self).__name__
+        new_dict["created_at"] = self.created_at.isoformat()
+        new_dict["updated_at"] = self.updated_at.isoformat()
+        return new_dict
