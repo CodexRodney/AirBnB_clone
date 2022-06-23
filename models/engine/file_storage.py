@@ -11,7 +11,10 @@ class FileStorage:
     """
     Serializes instances to a JSON file and deserializes JSON file to instances
     """
+
+    # string- Path to the JSON file
     __file_path = "file.json"
+    # Dictionary to store all objects by <class name>.id
     __objects = {}
 
     def all(self):
