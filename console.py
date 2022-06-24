@@ -53,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
         elif args[0].strip() != "BaseModel":
             print("** class doesn't exist **")
         elif len(args) < 2:
-            print("** instance id is missing **")
+            print("** instance id missing **")
         else:
             key = "{}.{}".format(args[0].strip(), args[1].strip())
             objs = models.storage.all()
