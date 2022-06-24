@@ -5,6 +5,9 @@ Defines a class FileStorage
 """
 
 import json
+from models.base_model import BaseModel
+
+classes = {"BaseModel": BaseModel}
 
 
 class FileStorage:
@@ -27,7 +30,7 @@ class FileStorage:
         """
         sets in __objects the obj with key <obj class name>.id
         """
-        key_name = str(type(obj).__name__) + '.' +  str(obj.id)
+        key_name = str(type(obj).__name__) + '.' + str(obj.id)
         type(self).__objects[key_name] = obj
 
     def save(self):
@@ -50,9 +53,11 @@ class FileStorage:
         """
         try:
             with open(type(self).__file_path) as myFile:
-                json_dict = json.load(myFile)
-                for obj_dict in json_dict.values():
-                    cls = obj_dict['__class__']
-                    self.new(eval('{}({})'.format(cls, '**obj_dict')))
-        except:
+                # used to store objects from myFile
+                dict1 = json.load(myFile)
+                for ob in dict1:
+                    # ob is used to each object in dict1
+                    self.__objects[ob] = classes[dict1[ob]["__class__"]](
+                            **dict1[key])
+        except Exception as e:
             pass
