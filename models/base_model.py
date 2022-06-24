@@ -28,7 +28,7 @@ class BaseModel:
                     self.__dict__[key] = datetime.strptime(item, time)
                     continue
                 if key == "updated_at":
-                    self.__dict__[key] = datetime.fromisoformat(item, time)
+                    self.__dict__[key] = datetime.strptime(item, time)
                     continue
                 self.__dict__[key] = item
         else:

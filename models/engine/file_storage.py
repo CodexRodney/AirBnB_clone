@@ -58,6 +58,6 @@ class FileStorage:
                 for ob in dict1:
                     # ob is used to each object in dict1
                     self.__objects[ob] = classes[dict1[ob]["__class__"]](
-                            **dict1[key])
-        except Exception as e:
+                            **dict1[ob])
+        except FileNotFoundError:
             pass
