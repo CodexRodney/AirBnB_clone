@@ -41,7 +41,8 @@ class BaseModel:
         """
         Prints [<class name>] (<self.id>) <self.__dict__>]
         """
-        str1 = "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        str1 = "[{}] ({}) {}".format(type(self).__name__, self.id,
+                                     self.__dict__)
         return str1
 
     def save(self):
