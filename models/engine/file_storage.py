@@ -5,10 +5,17 @@ Defines a class FileStorage
 """
 
 import json
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import state
 from models.user import User
 
-classes = {"BaseModel": BaseModel, "User": User}
+classes = {"BaseModel": BaseModel, "User": User
+           "Place": Place, "City": City, "Review": Review
+           "State": State, "Amenity": Amenity}
 
 
 class FileStorage:
