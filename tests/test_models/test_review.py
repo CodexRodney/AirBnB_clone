@@ -77,10 +77,7 @@ class TestReview(unittest.TestCase):
         """Test Review has attr user_id, and it's an empty string"""
         review = Review()
         self.assertTrue(hasattr(review, "user_id"))
-        if models.storage_t == 'db':
-            self.assertEqual(review.user_id, None)
-        else:
-            self.assertEqual(review.user_id, "")
+        self.assertEqual(review.user_id, "")
 
     def test_text_attr(self):
         """Test Review has attr text, and it's an empty string"""
