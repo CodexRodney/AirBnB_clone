@@ -138,30 +138,14 @@ class TestFileStorage_methods(unittest.TestCase):
             models.storage.save(None)
 
     def test_reload(self):
+        """Test reload method."""
         bm = BaseModel()
-        us = User()
-        st = State()
-        pl = Place()
-        cy = City()
-        am = Amenity()
-        rv = Review()
-        models.storage.new(bm)
-        models.storage.new(us)
-        models.storage.new(st)
-        models.storage.new(pl)
-        models.storage.new(cy)
-        models.storage.new(am)
-        models.storage.new(rv)
-        models.storage.save()
-        models.storage.reload()
-        objs = FileStorage._FileStorage__objects
-        self.assertIn("BaseModel." + bm.id, objs)
-        self.assertIn("User." + us.id, objs)
-        self.assertIn("State." + st.id, objs)
-        self.assertIn("Place." + pl.id, objs)
-        self.assertIn("City." + cy.id, objs)
-        self.assertIn("Amenity." + am.id, objs)
-        self.assertIn("Review." + rv.id, objs)
+        with open("file.json", "w", encoding="utf-8") as f:
+            key = "{}.{}".format(type(bm).__name__, bm.id)
+            json.dump({key: bm.to_dict()}, f)
+        self.storage.reload()
+        store = FileStorage._FileStorage__objects
+        self.assertIn("BaseModel." + bm.id, store)
 
     def test_reload_with_arg(self):
         with self.assertRaises(TypeError):
