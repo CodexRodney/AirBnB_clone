@@ -143,7 +143,7 @@ class TestFileStorage_methods(unittest.TestCase):
         with open("file.json", "w", encoding="utf-8") as f:
             key = "{}.{}".format(type(bm).__name__, bm.id)
             json.dump({key: bm.to_dict()}, f)
-        self.models.storage.reload()
+        models.storage.reload()
         store = FileStorage._FileStorage__objects
         self.assertIn("BaseModel." + bm.id, store)
 
